@@ -1,5 +1,5 @@
 
-
+/*
 function downloadFile(url,downloaded) {
     console.log(`Starting the download from ${url}`);
     
@@ -40,9 +40,73 @@ downloadFile('http://facebook.com/profile.jpg',function (path){
             console.log('Everything Done!!');
         });
     });
-});
+}); */
 
 // above code is asynch in nature as it will execute itself without disturbing other task in action like clicking the button
 // call back ke ander call back ho rha h uppar and it is known as call back hell(difficult to handle for too many codes)
 
+
 //now , write linear code using some other mechanism known as promises.
+
+function downloadFile(url) {
+    
+    return new Promise((resolve , reject) => {
+        console.log(`Starting the download from ${url}`);
+    
+        setTimeout(() => {
+            const path = url.split('/').pop();  //give the name of file
+            resolve(path);
+        },3000);
+    })
+  
+}
+function compressFile(path) {
+    return new Promise((resolve , reject) => {
+        console.log(`Starting the file compression for ${path}`);
+        setTimeout(() => {
+
+            const compressedPath = path.split('.')[0] + '.zip';
+            resolve(compressedPath);
+        },2000)
+    })
+
+}
+
+function uploadFile(compressedPath){
+    return new Promise(() => {
+        console.log(`Starting the file from ${compressedPath}`);
+
+        setTimeout(() => {
+            const uploadedPath = 'http://localsystem/' + compressedPath;
+            resolve(uploadedPath);
+        },3000);
+    })
+
+}
+
+
+// downloadFile('http://facebook.com/profile.jpg')
+//     .then((path) =>{
+//         console.log(`File Downloaded Successfully as ${path}`);
+//         compressFile(path)
+//             .then((compressedPath) => {
+//                 console.log(`File compressed successfully as ${compressedPath}`)
+//             });
+//             uploadFile(compressedPath)
+//                 .then((uploadedPath) => {
+//                     console.log(`File uploaded Successfully at ${uploadedPath}`);
+//                     console.log('Everything Done!!');
+//                 });
+//     });
+
+downloadFile('http://facebook.com/profile.jpg')
+    .then(compressFile)
+        .then(uploadFile)
+            .then((uploadedPath) => {
+                console.log(`File uploaded Successfully at ${uploadedPath}`);
+                console.log('Everything Done!!');
+            });
+    .catch((err) => {
+        console.log("something went wrong");
+        console.log('error');
+    })
