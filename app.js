@@ -39,4 +39,28 @@ for(let button of buttons){
         console.log(e.targe);
     })
 }
-// mouseleave
+// mouseleave part of mouse events
+//  ---------------Keyboard events-----------------
+
+constinp=document.getElementById('inp');
+InputEvent.addEventListener('keypress', ()=. {
+    console.log('Key Pressed');
+})
+
+
+//----------------------form events--------------
+const form=document.querySelector('form');
+
+form.addEventListener('submit',(e) => {
+    //prevent the form to refresh the page by default
+    e.preventDefault();
+    console.log('form submitted');
+
+})
+
+
+//----------------other events----------
+const p=document.querySelector('p');
+p.addEventListener('copy', () => {
+    alert('Stop copying');
+})
